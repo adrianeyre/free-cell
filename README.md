@@ -20,11 +20,9 @@ $ open ./public/index.html in your web browser
 ```
 
 ## <a name="Shots">Screen Shots</a>
-[![Screenshot](https://raw.githubusercontent.com/adrianeyre/free-cell/master/images/screenshot1.png)](https://raw.githubusercontent.com/adrianeyre/free-cell/
-master/images/screenshot1.png "Game View")
+[![Screenshot](https://raw.githubusercontent.com/adrianeyre/free-cell/master/images/screenshot1.png)](https://raw.githubusercontent.com/adrianeyre/free-cell/master/images/screenshot1.png "Game View")
 
-[![Screenshot](https://raw.githubusercontent.com/adrianeyre/free-cell/master/images/screenshot2.png)](https://raw.githubusercontent.com/adrianeyre/free-cell/
-master/images/screenshot2.png "Game View")
+[![Screenshot](https://raw.githubusercontent.com/adrianeyre/free-cell/master/images/screenshot2.png)](https://raw.githubusercontent.com/adrianeyre/free-cell/master/images/screenshot2.png "Game View")
 
 
 ## <a name="Play">Play Free Cell</a>
