@@ -10,6 +10,7 @@ export default class Canvas implements ICanvas {
 	private readonly DEFAULT_CARD_BACKGROUND_COLOUR = '#000';
 	private readonly DEFAULT_CARD_OUTLINE_COLOUR = '#FFF';
 	private readonly DEFAULT_CARD_BACKGROUND = String.fromCharCode(9608);
+	private readonly DEFAULT_FONT_COLOUR = '#000';
 
 	constructor(props: ICanvasProps) {
 		this.canvas = document.createElement('canvas');
@@ -19,6 +20,17 @@ export default class Canvas implements ICanvas {
 		this.canvas.style.backgroundColor = props.backgroundColour ? props.backgroundColour : this.DEFAULT_BACKGROUND_COLOUR;
 
 		this.ctx = this.canvas.getContext('2d');
+	}
+
+	public drawWon = (moves: number): void => {
+		this.drawBox(50, 50, this.canvas.width - 100, 200, '#FFF')
+		this.drawText(350, 100, 50, '#000', 'Congratulations');
+		this.drawText(350, 180, 20, '#000', `You completed the game in ${ moves } moves`);
+	}
+
+	public drawBlank = (x: number, y: number, showCardBackground: boolean): void => {
+		this.drawText(x, y , 99, this.DEFAULT_CARD_BACKGROUND_COLOUR, this.DEFAULT_CARD_BACKGROUND);
+		this.drawText(x , y, 95, showCardBackground ? this.DEFAULT_BACKGROUND_COLOUR : this.DEFAULT_CARD_OUTLINE_COLOUR, this.DEFAULT_CARD_BACKGROUND);
 	}
 
 	public drawCard = (card: ICard, x: number, y: number): void => {
@@ -38,9 +50,7 @@ export default class Canvas implements ICanvas {
 	public displayMoves = (moves: number): void => {
 		if (!this.ctx) return;
 
-		this.ctx.font = `20px arial`;
-		this.ctx.fillStyle = '#000';
-		this.ctx.fillText(`Moves: ${ moves }`, 50, 20);
+		this.drawText(55, 20, 20, '#000', `Moves: ${ moves }`);
 	}
 
 	private drawText = (x: number, y: number, size: number, colour: string, text: string): void => {
@@ -51,5 +61,15 @@ export default class Canvas implements ICanvas {
 		this.ctx.font = `${ size }px arial`;
 		this.ctx.fillStyle = colour;
 		this.ctx.fillText(text, x, y);
+	}
+
+	private drawBox = (x: number, y: number, width: number, height: number, colour: string): void => {
+		if (!this.ctx) return;
+
+		this.ctx.fillStyle = colour;
+		this.ctx.fillRect(x, y, width, height);
+		this.ctx.strokeRect(x, y, width, height);
+		this.ctx.fill();
+		this.ctx.stroke();
 	}
 }

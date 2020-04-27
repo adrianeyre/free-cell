@@ -15,12 +15,24 @@ export default class Game implements IGame {
 	private canvas: ICanvas;
 	private hand: IHand;
 	private moves: number = 0;
+	private gameInPlay: boolean = true;
+
+	private readonly cascadeStacks = 8;
 
 	constructor() {
 		this.canvas = new Canvas({ height: 800, width: 700 });
 		this.deck = new Deck();
 		this.hand = new Hand();
-		this.stacks = [new Stack(0), new Stack(1), new Stack(2), new Stack(3), new Stack(4), new Stack(5), new Stack(6), new Stack(7)];
+		this.stacks = [
+			new Stack({ x: 0, y: 250, cascade: true, allowAdditionalCards: true }), new Stack({ x: 1, y: 250, cascade: true, allowAdditionalCards: true }),
+			new Stack({ x: 2, y: 250, cascade: true, allowAdditionalCards: true }), new Stack({ x: 3, y: 250, cascade: true, allowAdditionalCards: true }),
+			new Stack({ x: 4, y: 250, cascade: true, allowAdditionalCards: true }), new Stack({ x: 5, y: 250, cascade: true, allowAdditionalCards: true }),
+			new Stack({ x: 6, y: 250, cascade: true, allowAdditionalCards: true }), new Stack({ x: 7, y: 250, cascade: true, allowAdditionalCards: true }),
+			new Stack({ x: 0, y: 100, cascade: false, allowAdditionalCards: false }), new Stack({ x: 1, y: 100, cascade: false, allowAdditionalCards: false }),
+			new Stack({ x: 2, y: 100, cascade: false, allowAdditionalCards: false }), new Stack({ x: 3, y: 100, cascade: false, allowAdditionalCards: false }),
+			new Stack({ x: 4, y: 100, cascade: false, allowAdditionalCards: true, isHomeSquare: true }), new Stack({ x: 5, y: 100, cascade: false, allowAdditionalCards: true, isHomeSquare: true }),
+			new Stack({ x: 6, y: 100, cascade: false, allowAdditionalCards: true, isHomeSquare: true }), new Stack({ x: 7, y: 100, cascade: false, allowAdditionalCards: true, isHomeSquare: true })
+		];
 	}
 
 	public play = (): void => {
@@ -32,7 +44,7 @@ export default class Game implements IGame {
 		this.deck.shuffle();
 
 		this.deck.cards.forEach((card: ICard, cardIndex: number) => {
-			const stackIndex = cardIndex % this.stacks.length
+			const stackIndex = cardIndex % this.cascadeStacks;
 			this.stacks[stackIndex].addCard(card);
 		});
 	}
@@ -50,6 +62,8 @@ export default class Game implements IGame {
 	}
 
 	private onMouseDown = (event: MouseEvent): void => {
+		if (!this.gameInPlay) return;
+
 		let cards: ICard[] | undefined;
 		this.stacks.forEach((stack: IStack, stackIndex: number) => {
 			cards = stack.findCard(event.x, event.y);
@@ -63,18 +77,32 @@ export default class Game implements IGame {
 	}
 
 	private onMouseUp = (event: MouseEvent): void => {
-		const stack = this.stacks.find((currentStack: IStack) => event.x >= currentStack.x - 28 && event.x <= currentStack.x + 28);
+		if (!this.gameInPlay) return;
+
+		const stack = this.stacks.find((currentStack: IStack) => event.x >= currentStack.x - 28 && event.x <= currentStack.x + 28 && event.y >= currentStack.y - 53);
 		let stackIndex = stack ? this.stacks.indexOf(stack) : this.hand.lastStackIndex;
-		const isValidMove = this.stacks[stackIndex].isValidMove(this.hand.cards[0]);
+		const isValidMove = this.stacks[stackIndex].isValidMove(this.hand.cards);
 
 		const stackToMove = isValidMove ? this.stacks[stackIndex] : this.stacks[this.hand.lastStackIndex];
 		this.hand.cards.forEach((card: ICard) => stackToMove.addCard(card));
 
 		if (isValidMove) this.moves ++;
 		this.hand.drop();
+
+		const isWon = this.stacks.filter((stack: IStack) => stack.isHomeSquare && stack.cards.length > 12).length > 3;
+		this.gameInPlay = !isWon;
+		if (!this.gameInPlay) this.gameWon();
+	}
+
+	private gameWon = (): void => {
+		this.canvas.clear();
+		this.canvas.drawWon(this.moves);
+		this.canvas.publish();
 	}
 
 	private onMouseMove = (event: MouseEvent) => {
+		if (!this.gameInPlay) return;
+
 		this.hand.cards.forEach((card: ICard, cardIndex: number) => {
 			card.x = event.x;
 			card.y = event.y + cardIndex * 40;
@@ -87,6 +115,7 @@ export default class Game implements IGame {
 		this.canvas.clear();
 
 		this.stacks.forEach((stack: IStack) => {
+			this.canvas.drawBlank(stack.x, stack.y, !stack.isHomeSquare)
 			stack.cards.forEach((card: ICard) => {
 				this.canvas.drawCard(card, card.x, card.y);
 			})
@@ -94,6 +123,7 @@ export default class Game implements IGame {
 
 		this.hand.cards.forEach((card: ICard) => this.canvas.drawCard(card, card.x, card.y));
 		this.canvas.displayMoves(this.moves);
+		if (!this.gameInPlay) this.canvas.drawWon(this.moves);
 		this.canvas.publish();
 	}
 }

@@ -1,18 +1,28 @@
 import IStack from './interfaces/stack';
+import IStackProps from './interfaces/stack-props';
 import ICard from './interfaces/card';
 
 export default class Stack implements IStack {
+	private cascade: boolean;
+	private allowAdditionalCards: boolean;
+	
 	public cards: ICard[];
 	public x: number;
+	public y: number;
+	public isHomeSquare: boolean;
 
-	constructor(index: number) {
+	constructor(props: IStackProps) {
 		this.cards = [];
-		this.x = index * 85 + 50;
+		this.x = props.x * 85 + 50;
+		this.y = props.y;
+		this.cascade = props.cascade;
+		this.allowAdditionalCards = props.allowAdditionalCards;
+		this.isHomeSquare = props.isHomeSquare || false;
 	}
 
 	public addCard = (card: ICard): void => {
 		card.x = this.x;
-		card.y = this.cards.length * 40 + 210;
+		card.y = this.cascade ? this.cards.length * 40 + this.y : this.y;
 		this.cards.push(card);
 	}
 
@@ -42,5 +52,29 @@ export default class Stack implements IStack {
 		return returnedCard;
 	}
 
-	public isValidMove = (currentCard: ICard, nextCard: ICard = this.cards[this.cards.length - 1]): boolean => currentCard?.isBlack !== nextCard?.isBlack && currentCard?.cost === nextCard?.cost - 1;
+	public isValidMove = (currentCards: ICard[], nextCard: ICard = this.cards[this.cards.length - 1]): boolean => {
+		if (!currentCards.length) return false;
+
+		const currentCard = currentCards[0];
+
+		if (this.isHomeSquare) {
+			return (this.isStackEmpty() && this.isCardAce(currentCard)) ||
+			(this.isSuiteSame(currentCard, nextCard) && this.isCostOneMore(currentCard, nextCard))
+		}
+
+		const isAllowedToAddMoreThanOne = this.allowAdditionalCards ? this.allowAdditionalCards : currentCards.length === 1;
+
+		return (this.isStackEmpty() && isAllowedToAddMoreThanOne) ||
+		((this.isCardsInStack() && isAllowedToAddMoreThanOne) &&
+		(this.isSuiteDifferent(currentCard, nextCard) && this.isCostOneLess(currentCard, nextCard)));
+	}
+
+	private isSuiteDifferent = (currentCard: ICard, nextCard: ICard): boolean => currentCard?.isBlack !== nextCard?.isBlack;
+	private isSuiteSame = (currentCard: ICard, nextCard: ICard): boolean => currentCard?.suite === nextCard?.suite;
+	private isCostOneLess = (currentCard: ICard, nextCard: ICard): boolean => currentCard?.cost === nextCard?.cost - 1;
+	private isCostOneMore = (currentCard: ICard, nextCard: ICard): boolean => currentCard?.cost === nextCard?.cost + 1;
+	private isCardAce = (currentCard: ICard): boolean => currentCard.cost === 1;
+	private isStackEmpty = (): boolean => this.cards.length === 0;
+	private isCardsInStack = (): boolean => this.cards.length > 0;
+	private isAllowedToAddMoreThanOne = (): boolean => this.allowAdditionalCards;
 }
