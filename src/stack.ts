@@ -21,8 +21,8 @@ export default class Stack implements IStack {
 	}
 
 	public addCard = (card: ICard): void => {
-		card.x = this.x;
-		card.y = this.cascade ? this.cards.length * 40 + this.y : this.y;
+		card.setX(this.x);
+		card.setY(this.cascade ? this.cards.length * 40 + this.y : this.y);
 		this.cards.push(card);
 	}
 
@@ -66,10 +66,10 @@ export default class Stack implements IStack {
 
 		return (this.isStackEmpty() && isAllowedToAddMoreThanOne) ||
 		((this.isCardsInStack() && isAllowedToAddMoreThanOne) &&
-		(this.isSuiteDifferent(currentCard, nextCard) && this.isCostOneLess(currentCard, nextCard)));
+		(this.isSuiteDifferentColour(currentCard, nextCard) && this.isCostOneLess(currentCard, nextCard)));
 	}
 
-	private isSuiteDifferent = (currentCard: ICard, nextCard: ICard): boolean => currentCard?.isBlack !== nextCard?.isBlack;
+	private isSuiteDifferentColour = (currentCard: ICard, nextCard: ICard): boolean => currentCard?.isBlack !== nextCard?.isBlack;
 	private isSuiteSame = (currentCard: ICard, nextCard: ICard): boolean => currentCard?.suite === nextCard?.suite;
 	private isCostOneLess = (currentCard: ICard, nextCard: ICard): boolean => currentCard?.cost === nextCard?.cost - 1;
 	private isCostOneMore = (currentCard: ICard, nextCard: ICard): boolean => currentCard?.cost === nextCard?.cost + 1;

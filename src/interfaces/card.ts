@@ -6,4 +6,6 @@ export default interface ICard {
 	isBlack: boolean;
 	x: number;
 	y: number;
+	setX(x: number): number;
+	setY(y: number): number;
 }

@@ -19,4 +19,7 @@ export default class Card implements ICard {
 		this.x = 0;
 		this.y = 0;
 	}
+
+	public setX = (x: number): number => this.x = x;
+	public setY = (y: number): number => this.y = y;
 }

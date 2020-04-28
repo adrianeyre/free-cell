@@ -50,13 +50,13 @@ export default class Canvas implements ICanvas {
 	public displayMoves = (moves: number): void => {
 		if (!this.ctx) return;
 
-		this.drawText(55, 20, 20, '#000', `Moves: ${ moves }`);
+		this.drawText(15, 20, 20, '#000', `Moves: ${ moves }`, 'left');
 	}
 
-	private drawText = (x: number, y: number, size: number, colour: string, text: string): void => {
+	private drawText = (x: number, y: number, size: number, colour: string, text: string, textAlign: CanvasTextAlign = 'center'): void => {
 		if (!this.ctx) return;
 
-		this.ctx.textAlign = 'center';
+		this.ctx.textAlign = textAlign;
 		this.ctx.textBaseline = 'middle';
 		this.ctx.font = `${ size }px arial`;
 		this.ctx.fillStyle = colour;
