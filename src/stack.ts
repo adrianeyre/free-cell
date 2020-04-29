@@ -13,7 +13,7 @@ export default class Stack implements IStack {
 
 	constructor(props: IStackProps) {
 		this.cards = [];
-		this.x = props.x * 85 + 50;
+		this.x = props.x;
 		this.y = props.y;
 		this.cascade = props.cascade;
 		this.allowAdditionalCards = props.allowAdditionalCards;

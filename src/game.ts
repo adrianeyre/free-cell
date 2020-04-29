@@ -20,18 +20,18 @@ export default class Game implements IGame {
 	private readonly cascadeStacks = 8;
 
 	constructor() {
-		this.canvas = new Canvas({ height: 800, width: 700 });
+		this.canvas = new Canvas({ height: 800, width: 750 });
 		this.deck = new Deck();
 		this.hand = new Hand();
 		this.stacks = [
-			new Stack({ x: 0, y: 250, cascade: true, allowAdditionalCards: true }), new Stack({ x: 1, y: 250, cascade: true, allowAdditionalCards: true }),
-			new Stack({ x: 2, y: 250, cascade: true, allowAdditionalCards: true }), new Stack({ x: 3, y: 250, cascade: true, allowAdditionalCards: true }),
-			new Stack({ x: 4, y: 250, cascade: true, allowAdditionalCards: true }), new Stack({ x: 5, y: 250, cascade: true, allowAdditionalCards: true }),
-			new Stack({ x: 6, y: 250, cascade: true, allowAdditionalCards: true }), new Stack({ x: 7, y: 250, cascade: true, allowAdditionalCards: true }),
-			new Stack({ x: 0, y: 100, cascade: false, allowAdditionalCards: false }), new Stack({ x: 1, y: 100, cascade: false, allowAdditionalCards: false }),
-			new Stack({ x: 2, y: 100, cascade: false, allowAdditionalCards: false }), new Stack({ x: 3, y: 100, cascade: false, allowAdditionalCards: false }),
-			new Stack({ x: 4, y: 100, cascade: false, allowAdditionalCards: true, isHomeSquare: true }), new Stack({ x: 5, y: 100, cascade: false, allowAdditionalCards: true, isHomeSquare: true }),
-			new Stack({ x: 6, y: 100, cascade: false, allowAdditionalCards: true, isHomeSquare: true }), new Stack({ x: 7, y: 100, cascade: false, allowAdditionalCards: true, isHomeSquare: true })
+			new Stack({ x: 70, y: 250, cascade: true, allowAdditionalCards: true }), new Stack({ x: 155, y: 250, cascade: true, allowAdditionalCards: true }),
+			new Stack({ x: 240, y: 250, cascade: true, allowAdditionalCards: true }), new Stack({ x: 325, y: 250, cascade: true, allowAdditionalCards: true }),
+			new Stack({ x: 410, y: 250, cascade: true, allowAdditionalCards: true }), new Stack({ x: 495, y: 250, cascade: true, allowAdditionalCards: true }),
+			new Stack({ x: 580, y: 250, cascade: true, allowAdditionalCards: true }), new Stack({ x: 665, y: 250, cascade: true, allowAdditionalCards: true }),
+			new Stack({ x: 50, y: 100, cascade: false, allowAdditionalCards: false }), new Stack({ x: 135, y: 100, cascade: false, allowAdditionalCards: false }),
+			new Stack({ x: 220, y: 100, cascade: false, allowAdditionalCards: false }), new Stack({ x: 305, y: 100, cascade: false, allowAdditionalCards: false }),
+			new Stack({ x: 440, y: 100, cascade: false, allowAdditionalCards: true, isHomeSquare: true }), new Stack({ x: 525, y: 100, cascade: false, allowAdditionalCards: true, isHomeSquare: true }),
+			new Stack({ x: 610, y: 100, cascade: false, allowAdditionalCards: true, isHomeSquare: true }), new Stack({ x: 695, y: 100, cascade: false, allowAdditionalCards: true, isHomeSquare: true })
 		];
 	}
 

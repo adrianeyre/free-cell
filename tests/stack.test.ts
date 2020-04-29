@@ -37,7 +37,7 @@ describe ('Stack', () => {
 
 	it ('can find card', () => {
 		stack.addCard(card);
-		expect(stack.findCard(135, 2)).to.deep.equal([card]);
+		expect(stack.findCard(1, 2)).to.deep.equal([card]);
 	})
 
 	describe('cascade stack', () => {
