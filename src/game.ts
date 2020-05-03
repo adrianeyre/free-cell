@@ -8,6 +8,8 @@ import Deck from './deck';
 import Stack from './stack';
 import Canvas from './canvas';
 import Hand from './hand';
+import IStackProps from './interfaces/stack-props';
+import stacks from './data/stacks';
 
 export default class Game implements IGame {
 	private deck: IDeck;
@@ -23,16 +25,7 @@ export default class Game implements IGame {
 		this.canvas = new Canvas({ height: 800, width: 750 });
 		this.deck = new Deck();
 		this.hand = new Hand();
-		this.stacks = [
-			new Stack({ x: 70, y: 250, cascade: true, allowAdditionalCards: true }), new Stack({ x: 155, y: 250, cascade: true, allowAdditionalCards: true }),
-			new Stack({ x: 240, y: 250, cascade: true, allowAdditionalCards: true }), new Stack({ x: 325, y: 250, cascade: true, allowAdditionalCards: true }),
-			new Stack({ x: 410, y: 250, cascade: true, allowAdditionalCards: true }), new Stack({ x: 495, y: 250, cascade: true, allowAdditionalCards: true }),
-			new Stack({ x: 580, y: 250, cascade: true, allowAdditionalCards: true }), new Stack({ x: 665, y: 250, cascade: true, allowAdditionalCards: true }),
-			new Stack({ x: 50, y: 100, cascade: false, allowAdditionalCards: false }), new Stack({ x: 135, y: 100, cascade: false, allowAdditionalCards: false }),
-			new Stack({ x: 220, y: 100, cascade: false, allowAdditionalCards: false }), new Stack({ x: 305, y: 100, cascade: false, allowAdditionalCards: false }),
-			new Stack({ x: 440, y: 100, cascade: false, allowAdditionalCards: true, isHomeSquare: true }), new Stack({ x: 525, y: 100, cascade: false, allowAdditionalCards: true, isHomeSquare: true }),
-			new Stack({ x: 610, y: 100, cascade: false, allowAdditionalCards: true, isHomeSquare: true }), new Stack({ x: 695, y: 100, cascade: false, allowAdditionalCards: true, isHomeSquare: true })
-		];
+		this.stacks = stacks.map((stackProps: IStackProps) => new Stack(stackProps));
 	}
 
 	public play = (): void => {
@@ -116,9 +109,7 @@ export default class Game implements IGame {
 
 		this.stacks.forEach((stack: IStack) => {
 			this.canvas.drawBlank(stack.x, stack.y, !stack.isHomeSquare)
-			stack.cards.forEach((card: ICard) => {
-				this.canvas.drawCard(card, card.x, card.y);
-			})
+			stack.cards.forEach((card: ICard) => this.canvas.drawCard(card, card.x, card.y));
 		})
 
 		this.hand.cards.forEach((card: ICard) => this.canvas.drawCard(card, card.x, card.y));
