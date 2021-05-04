@@ -10,7 +10,6 @@ export default class Canvas implements ICanvas {
 	private readonly DEFAULT_CARD_BACKGROUND_COLOUR = '#000';
 	private readonly DEFAULT_CARD_OUTLINE_COLOUR = '#FFF';
 	private readonly DEFAULT_CARD_BACKGROUND = String.fromCharCode(9608);
-	private readonly DEFAULT_FONT_COLOUR = '#000';
 
 	constructor(props: ICanvasProps) {
 		this.canvas = document.createElement('canvas');
