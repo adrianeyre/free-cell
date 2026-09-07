@@ -1,10 +1,10 @@
-import { expect } from 'chai';
+import { beforeEach, describe, expect, it } from 'vitest';
 import Hand from '../src/hand';
-import IHand from '../src/interfaces/hand';
+import type IHand from '../src/interfaces/hand';
 import Card from '../src/card';
-import ICard from '../src/interfaces/card';
+import type ICard from '../src/interfaces/card';
 
-describe ('Hand', () => {
+describe('Hand', () => {
 	let hand: IHand;
 	let card: ICard;
 
@@ -18,19 +18,19 @@ describe ('Hand', () => {
 			colour: '#000',
 			isBlack: true,
 		});
-	})
-
-	it ('can create hand object', () => {
-		expect(hand.cards.length).equal(0);
-		expect(hand.lastStackIndex).equal(-1);
-	})
-
-	it ('can pick up cards', () => {
-		expect(hand.pick([card])).to.deep.equal([card]);
 	});
 
-	it ('can drop all cards', () => {
-		expect(hand.pick([card])).to.deep.equal([card]);
-		expect(hand.drop()).to.deep.equal([]);
+	it('can create hand object', () => {
+		expect(hand.cards.length).toBe(0);
+		expect(hand.lastStackIndex).toBe(-1);
+	});
+
+	it('can pick up cards', () => {
+		expect(hand.pick([card])).toEqual([card]);
+	});
+
+	it('can drop all cards', () => {
+		expect(hand.pick([card])).toEqual([card]);
+		expect(hand.drop()).toEqual([]);
 	});
 });

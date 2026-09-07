@@ -1,5 +1,5 @@
-import ICard from './interfaces/card';
-import ICardProps from './interfaces/card-props'
+import type ICard from './interfaces/card';
+import type ICardProps from './interfaces/card-props';
 
 export default class Card implements ICard {
 	public suite: string;
@@ -20,6 +20,6 @@ export default class Card implements ICard {
 		this.y = 0;
 	}
 
-	public setX = (x: number): number => this.x = x;
-	public setY = (y: number): number => this.y = y;
+	public setX = (x: number): number => (this.x = x);
+	public setY = (y: number): number => (this.y = y);
 }

@@ -1,7 +1,7 @@
-import ICard from './card';
+import type ICard from './card';
 
 export default interface IDeck {
-	cards: ICard[]
+	cards: ICard[];
 	shuffle(): ICard[];
 	take(): ICard;
 }
