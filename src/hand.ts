@@ -1,5 +1,5 @@
-import IHand from './interfaces/hand';
-import ICard from './interfaces/card';
+import type IHand from './interfaces/hand';
+import type ICard from './interfaces/card';
 
 export default class Hand implements IHand {
 	public cards: ICard[];
@@ -9,7 +9,7 @@ export default class Hand implements IHand {
 		this.cards = [];
 	}
 
-	public pick = (cards: ICard[]): ICard[] => this.cards = cards;
+	public pick = (cards: ICard[]): ICard[] => (this.cards = cards);
 
-	public drop = (): ICard[] => this.cards = [];
+	public drop = (): ICard[] => (this.cards = []);
 }

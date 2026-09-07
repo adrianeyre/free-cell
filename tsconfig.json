@@ -1,11 +1,23 @@
 {
 	"compilerOptions": {
-		"target": "es2015",
-		"module": "commonjs",
-		"declaration": true,
-		"outDir": "dist",
+		"target": "es2022",
+		"lib": ["es2022", "dom"],
+		"module": "esnext",
+		"moduleResolution": "bundler",
+		"types": ["node", "vite/client"],
 		"strict": true,
+		"noUnusedLocals": true,
+		"noUnusedParameters": true,
+		"noFallthroughCasesInSwitch": true,
+		"noImplicitOverride": true,
+		"exactOptionalPropertyTypes": false,
+		"isolatedModules": true,
+		"verbatimModuleSyntax": false,
+		"esModuleInterop": true,
 		"allowSyntheticDefaultImports": true,
-		"esModuleInterop": true
-	}
+		"forceConsistentCasingInFileNames": true,
+		"skipLibCheck": true,
+		"noEmit": true
+	},
+	"include": ["src/**/*.ts", "tests/**/*.ts", "vite.config.ts", "eslint.config.js"]
 }

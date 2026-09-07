@@ -1,8 +1,8 @@
-import ICard from './card';
+import type ICard from './card';
 
 export default interface IHand {
 	cards: ICard[];
-	lastStackIndex: number
+	lastStackIndex: number;
 	pick(card: ICard[]): ICard[];
 	drop(): ICard[];
 }

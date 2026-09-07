@@ -1,5 +1,5 @@
-import IDeck from './interfaces/deck';
-import ICard from './interfaces/card'
+import type IDeck from './interfaces/deck';
+import type ICard from './interfaces/card';
 import Card from './card';
 
 export default class Deck implements IDeck {
@@ -11,8 +11,8 @@ export default class Deck implements IDeck {
 	constructor() {
 		this.cards = [];
 
-		for (let suiteIndex = 1; suiteIndex <= 4; suiteIndex ++) {
-			for (let valueIndex = 1; valueIndex <= 13; valueIndex ++) {
+		for (let suiteIndex = 1; suiteIndex <= 4; suiteIndex++) {
+			for (let valueIndex = 1; valueIndex <= 13; valueIndex++) {
 				const suite = String.fromCharCode(this.CARD_SUITES[suiteIndex - 1]);
 				const value = valueIndex > 10 ? 'JQK'[valueIndex - 11] : valueIndex === 1 ? 'A' : valueIndex.toString();
 				const colour = this.CARD_COLOUR[suiteIndex - 1];
@@ -22,7 +22,7 @@ export default class Deck implements IDeck {
 		}
 	}
 
-	public shuffle = (): ICard[] => this.cards = this.cards.sort(() => Math.random() - 0.5);
+	public shuffle = (): ICard[] => (this.cards = this.cards.sort(() => Math.random() - 0.5));
 
 	public take = (): ICard => this.cards.pop() || new Card({ suite: '', value: '', colour: '', cost: 0, isBlack: false });
 }

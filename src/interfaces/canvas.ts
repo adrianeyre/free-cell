@@ -1,4 +1,4 @@
-import ICard from './card';
+import type ICard from './card';
 
 export default interface ICanvas {
 	publish(): HTMLCanvasElement;

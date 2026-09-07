@@ -1,27 +1,27 @@
-import { expect } from 'chai';
+import { beforeEach, describe, expect, it } from 'vitest';
 import Deck from '../src/deck';
-import IDeck from '../src/interfaces/deck';
+import type IDeck from '../src/interfaces/deck';
 
-describe ('Deck', () => {
+describe('Deck', () => {
 	let deck: IDeck;
 
 	beforeEach(() => {
 		deck = new Deck();
-	})
-
-	it ('has 52 cards', () => {
-		expect(deck.cards.length).equal(52);
 	});
 
-	it ('can shuffle cards', () => {
+	it('has 52 cards', () => {
+		expect(deck.cards.length).toBe(52);
+	});
+
+	it('can shuffle cards', () => {
 		const cards = [...deck.cards];
 
-		expect(deck.shuffle()).not.equal(cards);
+		expect(deck.shuffle()).not.toBe(cards);
 	});
 
-	it ('can pick top card', () => {
+	it('can pick top card', () => {
 		const topCard = deck.cards[deck.cards.length - 1];
 
-		expect(deck.take()).equal(topCard);
+		expect(deck.take()).toBe(topCard);
 	});
 });
